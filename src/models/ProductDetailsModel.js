@@ -22,6 +22,6 @@ const DataSchema = mongoose.Schema(
   }
 );
 
-const ProductDetailModel = mongoose.model("productdetails", DataSchema);
+const ProductDetailsModel = mongoose.model("productdetails", DataSchema);
 
-module.exports = ProductDetailModel;
+module.exports = ProductDetailsModel;
