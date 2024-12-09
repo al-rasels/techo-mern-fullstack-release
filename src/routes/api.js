@@ -1,35 +1,44 @@
 const express = require("express");
-const PrductController = require("../controllers/ProductController");
+const ProductController = require("../controllers/ProductController");
+const UserController = require("../controllers/UserController");
+const AuthVerification = require("../middlewares/AuthVerification");
+
+
+
 const router = express.Router();
 
 //  Product routes
-router.get("/ProductBrandList", PrductController.ProductBrandList);
-router.get("/ProductCategoryList", PrductController.ProductCategoryList);
-router.get("/ProductSliderList", PrductController.ProductSliderList);
-router.get("/ProductListByBrand/:BrandID", PrductController.ProductListByBrand);
+router.get("/ProductBrandList", ProductController.ProductBrandList);
+router.get("/ProductCategoryList", ProductController.ProductCategoryList);
+router.get("/ProductSliderList", ProductController.ProductSliderList);
+router.get("/ProductListByBrand/:BrandID", ProductController.ProductListByBrand);
 router.get(
   "/ProductListByCategory/:CategoryID",
-  PrductController.ProductListByCategory
+  ProductController.ProductListByCategory
 );
 router.get(
   "/ProductListBySimilar/:CategoryID",
-  PrductController.ProductListBySimilar
+  ProductController.ProductListBySimilar
 );
 router.get(
   "/ProductListByKeyword/:Keyword",
-  PrductController.ProductListByKeyword
+  ProductController.ProductListByKeyword
 );
 router.get(
   "/ProductListByRemark/:Remark",
-  PrductController.ProductListByRemark
+  ProductController.ProductListByRemark
 );
-router.get("/ProductDetails/:ProductID", PrductController.ProductDetails);
-router.get("/ProductReviewList/:ProductID", PrductController.ProductReviewList);
-router.get("/ProductReviewList/:ProductID", PrductController.ProductReviewList);
+router.get("/ProductDetails/:ProductID", ProductController.ProductDetails);
+router.get("/ProductReviewList/:ProductID", ProductController.ProductReviewList);
+router.get("/ProductReviewList/:ProductID", ProductController.ProductReviewList);
 
 
 
 // User Routes
+
+router.get("/UserOTP/:email",UserController.UserOTP)
+router.get("/VerifyLogin/:email/:otp",UserController.VerifyLogin)
+router.get("/VerifyLogin/:email/:otp",AuthVerification,UserController.UserLogout)
 
 
 
