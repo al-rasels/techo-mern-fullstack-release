@@ -1,4 +1,5 @@
 const UserModel = require('../models/UserModel');
+const ProfileModel = require('../models/ProfileModel')
 const EmailSend=require('../utility/EmailHelper')
 const {EncodeToken} = require('../utility/TokenHelper')
 
@@ -41,19 +42,42 @@ const VerifyLoginService = async (req) => {
     }
     }
 
-const CreateProfileService = async () => {
+const SaveProfileService = async (req) => {
+    try {
+        const user_id = req.headers.user_id
+        let reqBody = req.body
+        reqBody.userID = user_id
+        await ProfileModel.updateOne({userID:user_id}, {$set:reqBody},{upsert:true})
+        return {status:'success',message:'Profile has been saved successfully'}
+
+    }catch (err) {
+        return {status:'error',message:'Error saving profile'}
+    }
 }
-const UpdateProfileService = async () => {
-}
-const ReadProfileService = async () => {
+
+
+const ReadProfileService = async (req) => {
+    try{
+
+
+        const user_id = req.headers.user_id
+        const result = await ProfileModel.findOne({userID:user_id})
+        if (result) {
+            return {status:'success', data:result}
+        } else {
+            return {status:'error',message:'No profile found for this user'}
+        }
+    }catch (err){
+        return {status:'error',message:'Error reading profile'}
+    }
+
 }
 
 
 module.exports ={
     UserOTPService,
     VerifyLoginService,
+    SaveProfileService,
 
-    CreateProfileService,
-    UpdateProfileService,
     ReadProfileService
 }

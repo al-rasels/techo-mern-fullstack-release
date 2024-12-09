@@ -3,7 +3,7 @@ const {
     VerifyLoginService,
     CreateProfileService,
     UpdateProfileService,
-    ReadProfileService,
+    ReadProfileService, SaveProfileService,
 }=require('../services/UserServices')
 
 
@@ -27,7 +27,7 @@ exports.VerifyLogin = async (req, res) => {
     return res.status(200).json(result)
 };
 exports.UserLogout = async (req, res) => {
-    const result=await LogoutService(req)
+
     const cookieOption={
         expires: new Date(Date.now() - 1000 * 60 * 60 * 24),
         httpOnly: false,
@@ -36,12 +36,12 @@ exports.UserLogout = async (req, res) => {
     return res.status(200).json({status:'success'})
 };
 exports.CreateProfile = async (req, res) => {
-    const result=await CreateProfileService(req)
+    const result=await SaveProfileService(req)
     return res.status(200).json(result)
 };
 
 exports.UpdateProfile = async (req, res) => {
-    const result=await UpdateProfileService(req)
+    const result=await SaveProfileService(req)
     return res.status(200).json(result)
 };
 exports.ReadProfile = async (req, res) => {

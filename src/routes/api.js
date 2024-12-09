@@ -39,6 +39,9 @@ router.get("/ProductReviewList/:ProductID", ProductController.ProductReviewList)
 router.get("/UserOTP/:email",UserController.UserOTP)
 router.get("/VerifyLogin/:email/:otp",UserController.VerifyLogin)
 router.get("/VerifyLogin/:email/:otp",AuthVerification,UserController.UserLogout)
+router.post("/CreateProfile",AuthVerification, UserController.CreateProfile);
+router.post("/UpdateProfile",AuthVerification, UserController.UpdateProfile);
+router.get("/ReadProfile",AuthVerification, UserController.ReadProfile);
 
 
 
