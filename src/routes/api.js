@@ -48,4 +48,5 @@ router.get("/ReadProfile",AuthVerification, UserController.ReadProfile);
 // wish list
 router.post('/SaveWishList',AuthVerification, WishlistController.SaveWishList);
 router.post('/RemoveWishList',AuthVerification, WishlistController.RemoveWishList);
+router.get('/WishList',AuthVerification, WishlistController.WishList);
 module.exports = router;
