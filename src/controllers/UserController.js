@@ -1,9 +1,8 @@
 const {
     UserOTPService,
     VerifyLoginService,
-    CreateProfileService,
-    UpdateProfileService,
-    ReadProfileService, SaveProfileService,
+    ReadProfileService,
+    SaveProfileService,
 }=require('../services/UserServices')
 
 

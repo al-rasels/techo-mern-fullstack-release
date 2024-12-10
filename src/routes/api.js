@@ -1,6 +1,7 @@
 const express = require("express");
 const ProductController = require("../controllers/ProductController");
 const UserController = require("../controllers/UserController");
+const WishlistController = require("../controllers/WishListController")
 const AuthVerification = require("../middlewares/AuthVerification");
 
 
@@ -44,5 +45,7 @@ router.post("/UpdateProfile",AuthVerification, UserController.UpdateProfile);
 router.get("/ReadProfile",AuthVerification, UserController.ReadProfile);
 
 
-
+// wish list
+router.post('/SaveWishList',AuthVerification, WishlistController.SaveWishList);
+router.post('/RemoveWishList',AuthVerification, WishlistController.RemoveWishList);
 module.exports = router;
