@@ -3,6 +3,7 @@ const ProductController = require("../controllers/ProductController");
 const UserController = require("../controllers/UserController");
 const WishlistController = require("../controllers/WishListController")
 const AuthVerification = require("../middlewares/AuthVerification");
+const CartListController=require("../controllers/CartListController")
 
 
 
@@ -50,3 +51,9 @@ router.post('/SaveWishList',AuthVerification, WishlistController.SaveWishList);
 router.post('/RemoveWishList',AuthVerification, WishlistController.RemoveWishList);
 router.get('/WishList',AuthVerification, WishlistController.WishList);
 module.exports = router;
+
+//Cart
+router.post('/SaveCartList',AuthVerification, CartListController.SaveCartList);
+router.post('/RemoveCartList',AuthVerification, CartListController.RemoveCartList);
+router.post('/UpdateCartList/:cartID',AuthVerification, CartListController.UpdateCartList);
+router.get('/CartList',AuthVerification, CartListController.CartList);
