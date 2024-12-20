@@ -131,17 +131,13 @@ const CreateInvoiceService = async (req) => {
         return {status: 'fail', message: 'Something Went Wrong' + err.message}
     }
 }
-const PaymentFailedService = async (req) => {
-    try {
-        return {status: 'success', data: ''}
-    } catch (err) {
-        return {status: 'fail', message: 'Something Went Wrong' + err.message}
-    }
-}
+
 
 const PaymentCanceledService = async (req) => {
     try {
-        return {status: 'success', data: ''}
+        const trxID = req.params.trxID
+        await InvoiceModel.updateOne({tran_id: trxID}, {payment_status: "cancel"})
+        return {status: 'success'}
     } catch (err) {
         return {status: 'fail', message: 'Something Went Wrong' + err.message}
     }
@@ -149,7 +145,10 @@ const PaymentCanceledService = async (req) => {
 
 const PaymentIPNService = async (req) => {
     try {
-        return {status: 'success', data: ''}
+        const trxID = req.params.trxID
+        let status = req.body['status']
+        await InvoiceModel.updateOne({tran_id: trxID}, {payment_status: status})
+        return {status: 'success'}
     } catch (err) {
         return {status: 'fail', message: 'Something Went Wrong' + err.message}
     }
@@ -158,21 +157,43 @@ const PaymentIPNService = async (req) => {
 
 const PaymentSuccessService = async (req) => {
     try {
-        return {status: 'success', data: ''}
+        const trxID = req.params.trxID
+        await InvoiceModel.updateOne({tran_id: trxID}, {payment_status: "success"})
+        return {status: 'success'}
+    } catch (err) {
+        return {status: 'fail', message: 'Something Went Wrong' + err.message}
+    }
+}
+
+const PaymentFailedService = async (req) => {
+    try {
+        const trxID = req.params.trxID
+        await InvoiceModel.updateOne({tran_id: trxID}, {payment_status: "fail"})
+        return {status: 'success',}
+
     } catch (err) {
         return {status: 'fail', message: 'Something Went Wrong' + err.message}
     }
 }
 const InvoiceListService = async (req) => {
     try {
-        return {status: 'success', data: ''}
+        const user_id = req.headers.user_id
+        const invoice = await InvoiceModel.findOne({userID: user_id})
+        return {status: 'success', data: invoice}
     } catch (err) {
         return {status: 'fail', message: 'Something Went Wrong' + err.message}
     }
 }
 const InvoiceProductListService = async (req) => {
     try {
-        return {status: 'success', data: ''}
+        const user_id = new ObjectID(req.headers.user_id);
+        const invoice_id = new ObjectID(req.params.invoice_id)
+        const matchStage = {$match: {userID: user_id, invoiceID: invoice_id}}
+        const JoinProductStage = {$lookup: {from: 'products', localField: 'productID', foreignField: '_id', as: 'product'}}
+        const UnwindProductStage = {$unwind: '$product'}
+        // Finding Product from user Cart
+        const products = await InvoiceProductModel.aggregate([matchStage, JoinProductStage, UnwindProductStage])
+        return {status: 'success', data: products}
     } catch (err) {
         return {status: 'fail', message: 'Something Went Wrong' + err.message}
     }
