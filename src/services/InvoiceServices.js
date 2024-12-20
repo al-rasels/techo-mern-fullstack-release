@@ -8,6 +8,8 @@ const InvoiceModel = require('../models/InvoiceModel');
 const InvoiceProductModel = require('../models/InvoiceProductModel');
 const PaymentSettingModel = require('../models/PaymentSettingModel');
 
+const UserModel = require("../models/UserModel");
+
 
 const ObjectID = mongoose.Types.ObjectId;
 
@@ -38,12 +40,12 @@ const CreateInvoiceService = async (req) => {
         const payable = totalAmount + vat;
 
         // Step-2: Prepare Customer Details & Shipping Details
-        const profile = await ProfileModel.aggregate([matchStage])
-        const cus_details = `Name:${profile[0]['cus_name']},Email:${cus_email},Address:${profile[0]['cus_add']},Phone:${profile[0]['cus_phone']}`
-        const ship_details = `Name:${profile[0]['ship_name']},City:${profile[0]['ship_city']},Address:${profile[0]['ship_add']},Phone:${profile[0]['ship_phone']}`
+        const Profile = await ProfileModel.aggregate([matchStage])
+        const cus_details = `Name:${Profile[0]['cus_name']},Email:${cus_email},Address:${Profile[0]['cus_add']},Phone:${Profile[0]['cus_phone']}`
+        const ship_details = `Name:${Profile[0]['ship_name']},City:${Profile[0]['ship_city']},Address:${Profile[0]['ship_add']},Phone:${Profile[0]['ship_phone']}`
 
         // Step-3: Transaction & Other's ID
-        let transaction_id = Math.floor(10000000 + Math.random() * 90000000)
+        let trans_id = Math.floor(10000000 + Math.random() * 90000000)
         let val_id = 0;
         let delivery_status = 'pending'
         let payment_status = 'pending'
@@ -55,7 +57,7 @@ const CreateInvoiceService = async (req) => {
             payable: payable,
             cus_details: cus_details,
             ship_details: ship_details,
-            trans_id: transaction_id,
+            trans_id: trans_id,
             val_id: val_id,
             delivery_status: delivery_status,
             payment_status: payment_status,
@@ -80,10 +82,51 @@ const CreateInvoiceService = async (req) => {
         })
         // Step-6: Remove Carts
         await CartModel.deleteMany({userID: user_id})
+
         // Step-7: Prepare SSL Payment
+        let PaymentSettings = await PaymentSettingModel.find();
 
 
-        return {status: 'success', data: invoice_id}
+        const form = new FormData();
+        form.append('store_id', PaymentSettings[0]['store_id'])
+        form.append('store_passwd', PaymentSettings[0]['store_passwd'])
+        form.append('total_amount', payable.toString())
+        form.append('currency', PaymentSettings[0]['currency'])
+        form.append('tran_id', trans_id)
+
+        form.append('success_url', `${PaymentSettings[0]['success_url']}/${trans_id}`)
+        form.append('fail_url', `${PaymentSettings[0]['fail_url']}/${trans_id}`)
+        form.append('cancel_url', `${PaymentSettings[0]['cancel_url']}/${trans_id}`)
+        form.append('ipn_url', `${PaymentSettings[0]['ipn_url']}/${trans_id}`)
+
+        form.append('cus_name', Profile[0]['cus_name'])
+        form.append('cus_email', cus_email)
+        form.append('cus_add1', Profile[0]['cus_add'])
+        form.append('cus_add2', Profile[0]['cus_add'])
+        form.append('cus_city', Profile[0]['cus_city'])
+        form.append('cus_state', Profile[0]['cus_state'])
+        form.append('cus_postcode', Profile[0]['cus_postcode'])
+        form.append('cus_country', Profile[0]['cus_country'])
+        form.append('cus_phone', Profile[0]['cus_phone'])
+        form.append('cus_fax', Profile[0]['cus_phone'])
+
+        form.append('shipping_method', "YES")
+        form.append('ship_name', Profile[0]['ship_name'])
+        form.append('ship_add1', Profile[0]['ship_add'])
+        form.append('ship_add2', Profile[0]['ship_add'])
+        form.append('ship_city', Profile[0]['ship_city'])
+        form.append('ship_state', Profile[0]['ship_state'])
+        form.append('ship_country', Profile[0]['ship_country'])
+        form.append('ship_postcode', Profile[0]['ship_postcode'])
+
+        form.append('product_name', 'According Invoice')
+        form.append('product_category', 'According Invoice')
+        form.append('product_profile', 'According Invoice')
+        form.append('product_amount', 'According Invoice')
+
+        let SSLRes = await axios.post(PaymentSettings[0]['init_url'], form);
+
+        return {status: "success", data: SSLRes.data}
     } catch (err) {
         return {status: 'fail', message: 'Something Went Wrong' + err.message}
     }
