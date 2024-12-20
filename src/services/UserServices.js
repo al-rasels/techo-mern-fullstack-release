@@ -23,7 +23,7 @@ const VerifyLoginService = async (req) => {
     try {
         const email = req.params.email;
         const otp = req.params.otp;
-        // if (otp === 0) return {status: 'error', message: 'Invalid verification code'}
+        if (otp === 0) return {status: 'error', message: 'Invalid verification code'}
         // user count
         const total = await UserModel.find({email: email, otp: otp}).countDocuments()
         if (total === 1) {
