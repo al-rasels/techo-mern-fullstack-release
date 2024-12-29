@@ -1,148 +1,146 @@
 
+# E-commerce Backend API
 
-# E-Commerce Backend API
-
-This repository implements a backend system for an e-commerce platform, developed using the MERN (MongoDB, Express.js, React, Node.js) stack. The project emphasizes scalable architecture, modular design, and efficient data handling for modern e-commerce platforms.
-
-## Abstract
-
-The **E-Commerce Backend API** is designed to handle essential functionalities required for an e-commerce application, such as user authentication, product management, order processing, and more. The system leverages a RESTful architecture and provides comprehensive support for integration with front-end frameworks.
-
-The project demonstrates the application of Computer Science principles such as:
-- **Data Persistence**: Utilizing MongoDB for non-relational data storage.
-- **Concurrency Control**: Managing simultaneous API calls.
-- **Authentication & Security**: Role-based access control using JWT.
-- **Scalable Design**: Modular architecture for system expansion.
+This project is a comprehensive e-commerce backend API developed as part of the Ostad MERN Batch-7 curriculum. It serves as a practical implementation of real-world project experience, focusing on the backend functionalities of an e-commerce platform.
 
 ## Table of Contents
 
-1. [Features](#features)  
-2. [System Requirements](#system-requirements)  
-3. [Setup and Configuration](#setup-and-configuration)  
-   - [Environment Variables](#environment-variables)  
-   - [Database Initialization](#database-initialization)  
-   - [Running the Application](#running-the-application)  
-4. [API Specification](#api-specification)  
-   - [User Module](#user-module)  
-   - [Product Module](#product-module)  
-   - [Order Module](#order-module)  
-   - [Cart and Wishlist Module](#cart-and-wishlist-module)  
-5. [Development Standards](#development-standards)  
-6. [Future Enhancements](#future-enhancements)  
-7. [Contributing Guidelines](#contributing-guidelines)  
-8. [License](#license)
+- [Features](#features)
+- [Technologies Used](#technologies-used)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+  - [Configuration](#configuration)
+  - [Seeding the Database](#seeding-the-database)
+  - [Running the Application](#running-the-application)
+- [API Endpoints](#api-endpoints)
+- [Contributing](#contributing)
+- [License](#license)
 
 ## Features
 
-### Core Functionality
-- **User Authentication**: Implements secure user registration and login with password hashing.
-- **Product Management**: APIs for creating, updating, and querying product listings.
-- **Order Fulfillment**: Endpoints for order creation, tracking, and payment status updates.
-- **Shopping Cart**: Support for adding, updating, and removing items from user-specific carts.
-- **Wishlist**: Enables users to manage their preferred items.
+- **User Authentication & Authorization**: Secure login and registration with role-based access control.
+- **Product Management**: CRUD operations for products, including categories and inventory management.
+- **Order Processing**: Manage customer orders, order statuses, and payment processing.
+- **Shopping Cart**: Handle user shopping cart functionalities.
+- **Wishlist**: Allow users to add products to their wishlist.
+- **Reviews & Ratings**: Users can leave reviews and ratings for products.
+- **Admin Dashboard**: Administrative access to manage users, products, and orders.
 
-### Administrative Features
-- **Admin Dashboard API**: Provides endpoints to manage user roles, products, and orders.
-- **Data Analytics Preparation**: API support for generating sales and user behavior metrics.
+## Technologies Used
 
-## System Requirements
+- **Node.js**: JavaScript runtime for server-side development.
+- **Express.js**: Web application framework for Node.js.
+- **MongoDB**: NoSQL database for data storage.
+- **Mongoose**: ODM (Object Data Modeling) library for MongoDB and Node.js.
+- **JWT**: JSON Web Tokens for authentication.
+- **bcrypt.js**: Library for hashing passwords.
 
-- **Node.js**: Version 16.x or higher  
-- **MongoDB**: Version 5.0 or higher  
-- **NPM**: Version 8.x or higher  
-- **Operating System**: Cross-platform (Windows, macOS, Linux)
+## Getting Started
 
-## Setup and Configuration
+### Prerequisites
 
-### Environment Variables
-Create a `.env` file in the project root with the following entries:
+Ensure you have the following installed on your system:
 
-```env
-PORT=8000
-MONGO_URI=mongodb://localhost:27017/ecommerce
-JWT_SECRET=your_secret_key
-```
+- **Node.js**: [Download and install](https://nodejs.org/).
+- **MongoDB**: [Download and install](https://www.mongodb.com/try/download/community).
 
-### Database Initialization
-To initialize the database with default data:
+### Installation
+
+1. **Clone the repository**:
+
+   ```bash
+   git clone https://github.com/shant0786/e-commerce-mern-app.git
+   ```
+
+2. **Navigate to the project directory**:
+
+   ```bash
+   cd e-commerce-mern-app
+   ```
+
+3. **Install dependencies**:
+
+   ```bash
+   npm install
+   ```
+
+### Configuration
+
+1. **Environment Variables**:
+
+   Create a `.env` file in the root directory and add the following variables:
+
+   ```env
+   PORT=8000
+   MONGO_URI=mongodb://localhost:27017/ecommerce
+   JWT_SECRET=your_jwt_secret
+   ```
+
+   Replace `your_jwt_secret` with a secure secret key of your choice.
+
+### Seeding the Database
+
+To populate the database with initial data, run:
 
 ```bash
 npm run seed
 ```
 
+This will add sample users, products, and other necessary data to your MongoDB database.
+
 ### Running the Application
-1. Install dependencies:
-   ```bash
-   npm install
-   ```
-2. Start the development server:
-   ```bash
-   npm run dev
-   ```
 
-The server will be available at `http://localhost:8000`.
+Start the development server with:
 
-## API Specification
+```bash
+npm run dev
+```
 
-### User Module
-- `POST /api/users/register`  
-  **Description**: Registers a new user.  
-  **Input**: JSON payload with `name`, `email`, and `password`.  
-  **Response**: Confirmation of registration or error message.  
+The server will run on `http://localhost:8000`.
 
-- `POST /api/users/login`  
-  **Description**: Authenticates a user.  
-  **Input**: JSON payload with `email` and `password`.  
-  **Response**: JWT for session management.  
+## API Endpoints
 
-### Product Module
-- `GET /api/products`  
-  **Description**: Retrieves a list of available products.  
+The API provides the following endpoints:
 
-- `POST /api/products`  
-  **Description**: Adds a new product to the catalog (Admin-only).  
+- **User Routes**:
+  - `POST /api/users/register`: Register a new user.
+  - `POST /api/users/login`: Authenticate a user.
+  - `GET /api/users/profile`: Retrieve user profile (requires authentication).
 
-### Order Module
-- `POST /api/orders`  
-  **Description**: Places a new order.  
-  **Input**: User-specific cart details and payment method.  
-  **Response**: Order confirmation.  
+- **Product Routes**:
+  - `GET /api/products`: Retrieve all products.
+  - `GET /api/products/:id`: Retrieve a single product by ID.
+  - `POST /api/products`: Create a new product (admin only).
+  - `PUT /api/products/:id`: Update a product by ID (admin only).
+  - `DELETE /api/products/:id`: Delete a product by ID (admin only).
 
-### Cart and Wishlist Module
-- `GET /api/cart`  
-  **Description**: Fetches the current user's shopping cart.  
+- **Order Routes**:
+  - `POST /api/orders`: Create a new order.
+  - `GET /api/orders/:id`: Retrieve order by ID.
+  - `GET /api/orders/user/:userId`: Retrieve orders for a specific user.
+  - `PUT /api/orders/:id`: Update order status (admin only).
 
-- `POST /api/wishlist`  
-  **Description**: Adds a product to the user's wishlist.
+- **Cart Routes**:
+  - `GET /api/cart`: Retrieve user's cart.
+  - `POST /api/cart`: Add item to cart.
+  - `PUT /api/cart/:itemId`: Update cart item quantity.
+  - `DELETE /api/cart/:itemId`: Remove item from cart.
 
-## Development Standards
+- **Wishlist Routes**:
+  - `GET /api/wishlist`: Retrieve user's wishlist.
+  - `POST /api/wishlist`: Add item to wishlist.
+  - `DELETE /api/wishlist/:itemId`: Remove item from wishlist.
 
-1. **Coding Style**: Follows the **Airbnb JavaScript Style Guide**.  
-2. **Version Control**: All changes are documented and committed using Git.  
-3. **API Design**: RESTful principles with appropriate HTTP status codes.  
-4. **Security Practices**:  
-   - Data encryption using bcrypt.  
-   - Stateless JWT-based authentication.  
-5. **Documentation**: APIs are self-documented using Swagger.
+- **Review Routes**:
+  - `POST /api/products/:id/reviews`: Add a review to a product.
+  - `GET /api/products/:id/reviews`: Retrieve reviews for a product.
 
-## Future Enhancements
+For detailed information on request and response structures, refer to the API documentation or the source code.
 
-- Integration with third-party payment gateways like Stripe or PayPal.  
-- Dynamic product recommendations using machine learning.  
-- Microservices architecture for scalability.  
-- GraphQL support for more efficient queries.
+## Contributing
 
-## Contributing Guidelines
-
-Contributions are welcome! Follow these steps to contribute:  
-1. Fork the repository.  
-2. Create a new branch for your feature/fix.  
-3. Submit a pull request with detailed comments.  
+Contributions are welcome! Please fork the repository and submit a pull request for any enhancements or bug fixes.
 
 ## License
 
-This project is licensed under the **Apache License 2.0**. See the [LICENSE](./LICENSE) file for details.
-
----
-
-Let me know if you want to include more sections or refine this documentation further.
