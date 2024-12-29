@@ -1,6 +1,4 @@
-Here’s an updated README tailored to professional and academic computer science standards, focusing on precision, structure, and technical depth:
 
----
 
 # E-Commerce Backend API
 
