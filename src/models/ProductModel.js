@@ -15,7 +15,6 @@ const DataSchema = mongoose.Schema(
     brandID: { type: mongoose.Schema.Types.ObjectId, required: true },
   },
   {
-    timestamps: true,
     versionKey: false,
   }
 );
