@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import logo from "../../assets/images/plainb-logo.svg";
+import logo from "../assets/images/plainb-logo.svg";
+
 function AppNavBar() {
   return (
     <>
@@ -35,15 +36,14 @@ function AppNavBar() {
       <nav className="navbar  sticky-top bg-white navbar-expand-lg navbar-light py-3">
         <div className="container">
           <Link className="navbar-brand" to="/">
-            <img className="img-fluid" src={logo} alt="" width="96px" />
+            <img className="img-fluid" src={logo} alt="logo" width="96px" />
           </Link>
           <button
             className="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
             data-bs-target="#nav06"
-            aria
-            controls="nav06"
+            aria-controls="nav06"
             aria-expanded="false"
             aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
@@ -79,8 +79,7 @@ function AppNavBar() {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 
-7 7 0 0114 0z"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                   />
                 </svg>
               </button>
