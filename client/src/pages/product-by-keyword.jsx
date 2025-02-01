@@ -3,16 +3,15 @@ import ProductStore from "../store/ProductStore";
 import { useEffect } from "react";
 import Layout from "../layout/Layout";
 import ProductList from "../components/product/product-list";
-
-function ProductByBrand() {
-  const { ListByBrandRequest } = ProductStore();
-  const { id } = useParams();
+function ProductByKeyword() {
+  const { ListByKeywordRequest } = ProductStore();
+  const { keyword } = useParams();
 
   useEffect(() => {
     (async () => {
-      await ListByBrandRequest(id);
+      await ListByKeywordRequest(keyword);
     })();
-  }, [id]);
+  }, [keyword]);
   return (
     <Layout>
       <ProductList />
@@ -20,4 +19,4 @@ function ProductByBrand() {
   );
 }
 
-export default ProductByBrand;
+export default ProductByKeyword;

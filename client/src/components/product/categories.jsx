@@ -28,9 +28,9 @@ function Categories() {
                       <img
                         alt="category-img"
                         className="w-75"
-                        src={item["brandImg"]}
+                        src={item["categoryImg"]}
                       />
-                      <p className="bodySmal mt-3">{item["brandName"]}</p>
+                      <p className="bodySmal mt-3">{item["categoryName"]}</p>
                     </div>
                   </Link>
                 </div>

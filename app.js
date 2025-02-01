@@ -12,10 +12,11 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const path = require("path");
-
-let URL =
-  "mongodb+srv://rmshanto786:shanto786@cluster0.vidqntm.mongodb.net/mern_ecommerce";
-let option = { autoIndex: true };
+const URL =
+  "mongodb+srv://<username>:<password>@cluster0.vidqntm.mongodb.net/mern_ecommerce";
+let option = { user: "rmshanto786", pass: "shanto786", autoIndex: true };
+// const URL = 'mongodb+srv://Rup774827:Rup774827@cluster0.i5nrrf0.mongodb.net/ecom'
+// let option = {user: "Rup774827", pass: "Rup774827", autoIndex: true};
 
 mongoose
   .connect(URL, option)
@@ -28,7 +29,16 @@ mongoose
 
 app.use(cookieParser());
 app.use(cors());
-app.use(helmet());
+
+app.use(
+  helmet.contentSecurityPolicy({
+    useDefaults: true,
+    directives: {
+      "img-src": ["'self'", "https: data:"],
+    },
+  })
+);
+
 app.use(mongoSanitize());
 app.use(xss());
 app.use(hpp());
@@ -41,6 +51,9 @@ app.use(limiter);
 
 app.set("etag", false);
 app.use("/api/v1", router);
+
+// Scaffolding with client-side
+app.use(express.static("client/dist"));
 
 // Add React Front End Routing
 app.get("*", function (req, res) {

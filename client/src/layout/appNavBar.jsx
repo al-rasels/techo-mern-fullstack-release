@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import logo from "../assets/images/plainb-logo.svg";
+import ProductStore from "../store/ProductStore";
 
 function AppNavBar() {
+  const { SearchKeyword, SetSearchKeyword } = ProductStore();
   return (
     <>
       <div className="container-fluid text-white p-2 bg-success">
@@ -60,12 +62,20 @@ function AppNavBar() {
           <div className=" d-lg-flex">
             <div className="input-group">
               <input
+                onChange={(e) => SetSearchKeyword(e.target.value)}
                 className="form-control"
                 type="search"
                 placeholder="Search"
                 aria-label="Search"
               />
-              <button className="btn btn-outline-dark" type="submit">
+              <Link
+                to={
+                  SearchKeyword.length > 0
+                    ? `/by-keyword/${SearchKeyword}`
+                    : "/"
+                }
+                className="btn btn-outline-dark"
+                type="submit">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   fill="none"
@@ -82,7 +92,7 @@ function AppNavBar() {
                     d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                   />
                 </svg>
-              </button>
+              </Link>
             </div>
             <Link
               to="/cart"
