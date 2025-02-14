@@ -1,9 +1,19 @@
-import { Link } from "react-router-dom";
-import logo from "../assets/images/plainb-logo.svg";
-import ProductStore from "../store/ProductStore";
+import { Link, useNavigate } from "react-router-dom";
+import logo from "../../assets/images/plainb-logo.svg";
+import ProductStore from "../../store/ProductStore";
+import UserStore from "../../store/UserStore";
+import UserSubmitButton from "../user/UserSubmitButton";
 
 function AppNavBar() {
+  const navigate = useNavigate();
+  const { isLogin, UserLogoutRequest } = UserStore();
   const { SearchKeyword, SetSearchKeyword } = ProductStore();
+  const onLogout = async () => {
+    const res = await UserLogoutRequest();
+    localStorage.clear();
+    sessionStorage.clear();
+    navigate("/");
+  };
   return (
     <>
       <div className="container-fluid text-white p-2 bg-success">
@@ -50,15 +60,7 @@ function AppNavBar() {
             aria-label="Toggle navigation">
             <span className="navbar-toggler-icon"></span>
           </button>
-          <div className="collapse navbar-collapse" id="nav06">
-            <ul className="navbar-nav mt-3 mt-lg-0 mb-3 mb-lg-0 ms-lg-3">
-              <span className="nav-item me-4">
-                <Link className="nav-link" to="/">
-                  Home
-                </Link>
-              </span>
-            </ul>
-          </div>
+          <div className="collapse navbar-collapse" id="nav06"></div>
           <div className=" d-lg-flex">
             <div className="input-group">
               <input
@@ -106,18 +108,29 @@ function AppNavBar() {
               className="btn ms-2 btn-light d-flex">
               <i className="bi text-dark bi-heart"></i>
             </Link>
-            <Link
-              type="button"
-              className="btn ms-3 btn-success d-flex"
-              to="/profile">
-              Profile
-            </Link>
-            <Link
-              type="button"
-              className="btn ms-3 btn-success d-flex"
-              to="/profile">
-              Logout
-            </Link>
+
+            {isLogin() ? (
+              <>
+                <Link
+                  type="button"
+                  className="btn ms-3 btn-success d-flex"
+                  to="/profile">
+                  Profile
+                </Link>
+                <UserSubmitButton
+                  text="logout"
+                  onClick={onLogout}
+                  className="btn ms-3 btn-success d-flex"
+                />
+              </>
+            ) : (
+              <Link
+                type="button"
+                className="btn ms-3 btn-success d-flex"
+                to="/login">
+                Login
+              </Link>
+            )}
           </div>
         </div>
       </nav>

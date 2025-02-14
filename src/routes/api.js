@@ -116,6 +116,7 @@ router.get(
 
 // Features
 router.get("/FeaturesList", FeaturesController.FeaturesList);
+router.get('/LegalDetails/:type', FeaturesController.LegalDetails)
 
 //Create Review
 router.post("/CreateReview", AuthVerification, ProductController.CreateReview);

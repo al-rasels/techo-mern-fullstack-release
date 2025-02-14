@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import ProductStore from "../store/ProductStore";
 import { useEffect } from "react";
-import Layout from "../layout/Layout";
+import Layout from "../components/layout/layout";
 import ProductList from "../components/product/product-list";
 
 function ProductByBrand() {

@@ -14,6 +14,19 @@ const FeatureStore = create((set) => ({
       console.error(error);
     }
   },
+
+  LegalDetails: null,
+  LegalDetailsRequest: async (type) => {
+    try {
+      set({ LegalDetails: null });
+      const res = await axios.get(`/api/v1/LegalDetails/${type}`);
+      if (res.data["status"] === "success") {
+        set({ LegalDetails: res.data["data"] });
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  },
 }));
 
 export default FeatureStore;
