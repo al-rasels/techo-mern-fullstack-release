@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import axios from "axios";
-import { getEmail, setEmail } from "../utility/utility.js";
+import { getEmail, setEmail, unauthorized } from "../utility/utility.js";
 import Cookies from "js-cookie";
 
 // Feature List API
@@ -11,14 +11,12 @@ const UserStore = create((set) => ({
 
   LoginFormData: { email: "" },
   LoginFormOnChange: (name, value) => {
-    // set((LoginFormData) => ({ ...LoginFormData, [name]: value }));
     set((state) => ({
       LoginFormData: { ...state.LoginFormData, [name]: value },
     }));
   },
   OTPFormData: { otp: "" },
   OTPFormOnChange: (name, value) => {
-    // set((LoginFormData) => ({ ...LoginFormData, [name]: value }));
     set((state) => ({
       OTPFormData: { ...state.OTPFormData, [name]: value },
     }));
@@ -60,6 +58,56 @@ const UserStore = create((set) => ({
       return res.data["status"] === "success";
     } catch (error) {
       console.error(error);
+    }
+  },
+
+  ProfileForm: {
+    cus_add: "",
+    cus_city: "",
+    cus_country: "",
+    cus_fax: "",
+    cus_name: "",
+    cus_phone: "",
+    cus_postcode: "",
+    cus_state: "",
+    ship_add: "",
+    ship_city: "",
+    ship_country: "",
+    ship_name: "",
+    ship_phone: "",
+    ship_postcode: "",
+    ship_state: "",
+  },
+  ProfileFormChange: (name, value) => {
+    set((state) => ({
+      ProfileForm: {
+        ...state.ProfileForm,
+        [name]: value,
+      },
+    }));
+  },
+  ProfileDetails: null,
+  ProfileDetailsRequest: async () => {
+    try {
+      const res = await axios.get(`/api/v1/ReadProfile`);
+
+      if (res.data["data"]) {
+        set({ ProfileDetails: res.data["data"] });
+        set({ ProfileForm: res.data["data"] });
+      } else {
+        set({ ProfileDetails: [] });
+      }
+    } catch (error) {
+      unauthorized(error.response.status);
+    }
+  },
+  ProfileSaveRequest: async (PostBody) => {
+    try {
+      set({ ProfileDetails: null });
+      const res = await axios.post(`/api/v1/UpdateProfile`, PostBody);
+      return res.data["status"] === "success";
+    } catch (error) {
+      unauthorized(error.response.status);
     }
   },
 }));

@@ -3,17 +3,29 @@ import logo from "../../assets/images/plainb-logo.svg";
 import ProductStore from "../../store/ProductStore";
 import UserStore from "../../store/UserStore";
 import UserSubmitButton from "../user/UserSubmitButton";
+import CartStore from "../../store/CartStore";
+import { useEffect } from "react";
 
 function AppNavBar() {
   const navigate = useNavigate();
   const { isLogin, UserLogoutRequest } = UserStore();
+  const { CartCount, CartListRequest } = CartStore();
   const { SearchKeyword, SetSearchKeyword } = ProductStore();
   const onLogout = async () => {
     const res = await UserLogoutRequest();
     localStorage.clear();
     sessionStorage.clear();
-    navigate("/");
+    if (res === "success") {
+      navigate("/");
+    }
   };
+  useEffect(() => {
+    async () => {
+      if (isLogin()) {
+        await CartListRequest();
+      }
+    };
+  }, []);
   return (
     <>
       <div className="container-fluid text-white p-2 bg-success">
@@ -101,6 +113,9 @@ function AppNavBar() {
               type="button"
               className="btn ms-2 btn-light position-relative">
               <i className="bi text-dark bi-bag"></i>
+              <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
+                {CartCount}
+              </span>
             </Link>
             <Link
               to="/wish"

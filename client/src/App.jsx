@@ -13,6 +13,7 @@ import ContactPage from "./pages/contact-page";
 import ComplainPage from "./pages/complain-page";
 import LoginPage from "./pages/login-page";
 import OTPPage from "./pages/otp-page";
+import ProfilePage from "./pages/profile-page";
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
         <Route path="/complain" exact element={<ComplainPage />} />
         <Route path="/login" exact element={<LoginPage />} />
         <Route path="/otp" exact element={<OTPPage />} />
+        <Route path="/profile" exact element={<ProfilePage />} />
       </Routes>
     </BrowserRouter>
   );
