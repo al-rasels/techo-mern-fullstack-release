@@ -14,6 +14,9 @@ import ComplainPage from "./pages/complain-page";
 import LoginPage from "./pages/login-page";
 import OTPPage from "./pages/otp-page";
 import ProfilePage from "./pages/profile-page";
+import WishListPage from "./pages/wish-list-page";
+import CartListPage from "./pages/cart-list-page";
+import OrderPage from "./pages/order-page";
 
 function App() {
   return (
@@ -33,11 +36,14 @@ function App() {
         <Route path="/privacy" exact element={<PrivacyPage />} />
         <Route path="/terms" exact element={<TermsPage />} />
         <Route path="/how-to-buy" exact element={<HowToBuyPage />} />
-        <Route path="/contact" exact element={<ContactPage />} />
+        <Route path="/contact" exact element={<ContactPage />} />n
         <Route path="/complain" exact element={<ComplainPage />} />
         <Route path="/login" exact element={<LoginPage />} />
         <Route path="/otp" exact element={<OTPPage />} />
         <Route path="/profile" exact element={<ProfilePage />} />
+        <Route path="/wish" exact element={<WishListPage />} />
+        <Route path="/cart" exact element={<CartListPage />} />
+        <Route path="/orders" exact element={<OrderPage />} />
       </Routes>
     </BrowserRouter>
   );

@@ -7,12 +7,15 @@ import Reviews from "./reviews";
 import CartStore from "../../store/CartStore";
 import CartSubmitButton from "./../cart/CartSubmitButton";
 import toast from "react-hot-toast";
+import WishStore from "../../store/WishStore";
+import WishSubmitButton from "../wish/WishSubmitButton";
 
 function Details() {
   const { Details } = ProductStore();
   let [quantity, SetQuantity] = useState(1);
   const { CartSaveRequest, CartForm, CartListRequest, CartFormChange } =
     CartStore();
+  const { WishSaveRequest, WishListRequest } = WishStore();
 
   const IncreaseQuatity = () => {
     SetQuantity((quantity) => quantity + 1);
@@ -27,6 +30,14 @@ function Details() {
     if (res) {
       toast.success("Cart Item Added");
       await CartListRequest();
+    }
+  };
+  const AddWish = async (productID) => {
+    const res = WishSaveRequest(productID);
+
+    if (res) {
+      toast.success("Wish Item Added");
+      await WishListRequest();
     }
   };
 
@@ -135,9 +146,13 @@ function Details() {
                     />
                   </div>
                   <div className="col-4  p-2">
-                    <button className="btn w-100 btn-success">
-                      Add to Wish
-                    </button>
+                    <WishSubmitButton
+                      onClick={async () => {
+                        await AddWish(Details[0]["_id"]);
+                      }}
+                      className="btn w-100 btn-success"
+                      text="Add to Wish"
+                    />
                   </div>
                 </div>
               </div>
