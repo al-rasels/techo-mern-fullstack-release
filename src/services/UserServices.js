@@ -17,6 +17,7 @@ const UserOTPService = async (req) => {
     } catch (err) {
         return {status: 'error', message: 'An error has occurred, failed to send email verification'}
     }
+    
 }
 
 const VerifyLoginService = async (req) => {

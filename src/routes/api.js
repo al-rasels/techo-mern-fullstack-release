@@ -53,7 +53,7 @@ router.get(
 router.get("/UserOTP/:email", UserController.UserOTP);
 router.get("/VerifyLogin/:email/:otp", UserController.VerifyLogin);
 router.get(
-    "/VerifyLogin/:email/:otp",
+    "/UserLogout",
     AuthVerification,
     UserController.UserLogout
 );

@@ -11,18 +11,20 @@ const {
 exports.CreateInvoice = async (req, res) => {
     const result = await CreateInvoiceService(req)
     return res.status(200).json(result)
+
 }
 exports.PaymentSuccess = async (req, res) => {
     const result = await PaymentSuccessService(req)
-    return res.status(200).json(result)
+    return res.redirect('/orders')
+
 }
 exports.PaymentFail = async (req, res) => {
     const result = await PaymentFailedService(req)
-    return res.status(200).json(result)
+    return res.redirect('/orders')
 }
 exports.PaymentCancel = async (req, res) => {
     const result = await PaymentCanceledService(req)
-    return res.status(200).json(result)
+    return res.redirect('/orders')
 }
 exports.PaymentIPN = async (req, res) => {
     const result = await PaymentIPNService(req)
