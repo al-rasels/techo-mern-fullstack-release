@@ -5,11 +5,18 @@ import Brands from "../components/product/brands";
 import ProductStore from "../store/ProductStore";
 import { useEffect } from "react";
 
+import DetailPageSkeleton from "../skeleton/detail-page-skeleton";
+
 function ProductDetails() {
   const { id } = useParams();
 
-  const { BrandList, DetailsRequest, ReviewListRequest, BrandListRequest } =
-    ProductStore();
+  const {
+    BrandList,
+    DetailsRequest,
+    isDetailLoaded,
+    ReviewListRequest,
+    BrandListRequest,
+  } = ProductStore();
 
   useEffect(() => {
     (async () => {
@@ -21,7 +28,7 @@ function ProductDetails() {
 
   return (
     <Layout>
-      <Details />
+      {isDetailLoaded === true ? <Details /> : <DetailPageSkeleton />}
       <Brands />
     </Layout>
   );

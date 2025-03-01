@@ -26,18 +26,16 @@ function Details() {
 
   const AddCart = async (productID, quantity) => {
     const res = CartSaveRequest(CartForm, productID, quantity);
-
-    if (res) {
+    await CartListRequest();
+    if (res === true) {
       toast.success("Cart Item Added");
-      await CartListRequest();
     }
   };
   const AddWish = async (productID) => {
     const res = WishSaveRequest(productID);
-
-    if (res) {
+    await WishListRequest();
+    if (res === true) {
       toast.success("Wish Item Added");
-      await WishListRequest();
     }
   };
 

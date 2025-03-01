@@ -23,14 +23,16 @@ function Categories() {
                   className="col-6 col-lg-8r text-center col-md-8r p-2">
                   <Link
                     to={`/by-category/${item["_id"]}`}
-                    className="card h-100 rounded-3 bg-light">
-                    <div className="card-body">
+                    className="card h-100 rounded-3 bg-light border border-success-subtle">
+                    <div className="card-body d-flex flex-column align-items-center justify-content-center">
                       <img
                         alt="category-img"
                         className="w-75"
                         src={item["categoryImg"]}
                       />
-                      <p className="bodySmal mt-3">{item["categoryName"]}</p>
+                      <p className="bodySmal mt-3 text-center">
+                        {item["categoryName"]}
+                      </p>
                     </div>
                   </Link>
                 </div>

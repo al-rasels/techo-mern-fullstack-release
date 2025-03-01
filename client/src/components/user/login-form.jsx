@@ -19,8 +19,8 @@ function LoginForm() {
   return (
     <>
       <div className="container section">
-        <div className="row d-flex justify-content-center">
-          <div className="col-md-5">
+        <div className="row d-flex align-items-stretch justify-content-center pb-md-2">
+          <div className="col-md-5 mb-md-5">
             <div className="card p-5">
               <h4>Enter Your Email</h4>
               <p>

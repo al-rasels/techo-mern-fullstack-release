@@ -107,10 +107,13 @@ const ProductStore = create((set) => ({
   SetSearchKeyword: async (keyword) => set({ SearchKeyword: keyword }),
 
   Details: null,
+  isDetailLoaded: false,
   DetailsRequest: async (productID) => {
     try {
       set({ Details: null });
+      set({ isDetailLoaded: false });
       const res = await axios.get(`/api/v1/ProductDetails/${productID}`);
+      set({ isDetailLoaded: true });
       if (res.data["status"] === "success") {
         set({ Details: res.data["data"] });
       }

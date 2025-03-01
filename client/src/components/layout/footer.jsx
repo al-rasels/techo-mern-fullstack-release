@@ -4,7 +4,7 @@ function Footer() {
   return (
     <>
       <div>
-        <div className="section-bottom shadow-sm bg-light">
+        <div className="section-bottom shadow-sm border-top border-secondary-subtle bg-light justify-content-end">
           <div className="container py-5">
             <div className="row">
               <div className="col-md-4">
@@ -61,7 +61,10 @@ function Footer() {
           </div>
         </div>
         <div className="bg-dark py-3 text-center">
-          <p className="text-white bodySmal">All Rights Reserved </p>
+          <p className="text-white bodySmal">
+            © 2025 <strong>MD HUMAUN AL RASEL</strong>. All rights reserved by
+            the owner.
+          </p>
         </div>
       </div>
     </>

@@ -1,6 +1,7 @@
 import { create } from "zustand";
 import axios from "axios";
 import { unauthorized } from "../utility/utility.js";
+import toast from "react-hot-toast";
 
 // Feature List API
 const CartStore = create((set) => ({
@@ -18,8 +19,11 @@ const CartStore = create((set) => ({
       PostBody.productID = productID;
       PostBody.qty = quantity;
 
+      if (PostBody.color == "" && PostBody.size == "") {
+        toast.error("Select Size And Color");
+        return false;
+      }
       const res = await axios.post(`/api/v1/SaveCartList`, PostBody);
-      console.log(res.data["data"]);
 
       return res.data["status"] === "success";
     } catch (err) {
@@ -36,9 +40,9 @@ const CartStore = create((set) => ({
   CartListRequest: async () => {
     try {
       const res = await axios.get(`/api/v1/CartList`);
-      set({ CartList: res.data["data"] });
       set({ CartCount: res.data["data"].length });
-      console.log(res.data["data"]);
+      set({ CartList: res.data["data"] });
+
       let total = 0;
       let vat = 0;
       let payable = 0;
@@ -70,28 +74,36 @@ const CartStore = create((set) => ({
       unauthorized(err.response.status);
     }
   },
+
   CreateInvoiceRequest: async () => {
     try {
       set({ isCartSubmit: true });
-      const res = await axios.get(`/api/v1/CreateInvoice`);
-      console.log(res.data["data"]);
-
-      window.location.href = res.data["data"]["redirectGatewayURL"];
-      return res.data["status"] === "success";
-    } catch (err) {
-      unauthorized(err.response.status);
+      let res = await axios.get(`/api/v1/CreateInvoice`);
+      window.location.href = res.data["data"]["GatewayPageURL"];
+    } catch (e) {
+      unauthorized(e.response.status);
     } finally {
       set({ isCartSubmit: false });
+    }
+  },
+
+  InvoiceList: null,
+  InvoiceListRequest: async () => {
+    try {
+      let res = await axios.get(`/api/v1/InvoiceList`);
+      set({ InvoiceList: res.data["data"] });
+    } catch (e) {
+      unauthorized(e.response.status);
     }
   },
 
   InvoiceDetails: null,
   InvoiceDetailsRequest: async (id) => {
     try {
-      const res = await axios.get(`/api/v1/InvoiceProductList/${id}`);
+      let res = await axios.get(`/api/v1/InvoiceProductList/${id}`);
       set({ InvoiceDetails: res.data["data"] });
-    } catch (err) {
-      unauthorized(err.response.status);
+    } catch (e) {
+      unauthorized(e.response.status);
     }
   },
 }));

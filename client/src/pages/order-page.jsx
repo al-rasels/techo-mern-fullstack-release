@@ -1,4 +1,4 @@
-import InvoiceList from "../components/invoice/invoide-list";
+import InvoiceList from "../components/invoice/invoice-list";
 import Layout from "../components/layout/layout";
 
 function OrderPage() {

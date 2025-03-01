@@ -25,7 +25,7 @@ const AppNavBar = () => {
         await WishListRequest();
       }
     })();
-  }, []);
+  }, [CartCount, WishCount]);
   return (
     <>
       <div className="container-fluid text-white p-2 bg-success">
@@ -79,31 +79,34 @@ const AppNavBar = () => {
                 <Link className="btn ms-2 btn-light position-relative" to="/">
                   <i className="bi bi-house"></i> Home
                 </Link>
-                <Link
-                  to="/cart"
-                  type="button"
-                  className="btn ms-2 btn-light position-relative">
-                  <i className="bi text-dark bi-bag"></i> Cart
-                  <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
-                    {CartCount}
-                  </span>
-                </Link>
-                <Link
-                  to="/wish"
-                  type="button"
-                  className="btn ms-4 btn-light position-relative">
-                  <i className="bi text-dark bi-heart"></i> Wish
-                  <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
-                    {WishCount}
-                  </span>
-                </Link>
-
-                <Link
-                  to="/orders"
-                  type="button"
-                  className="btn ms-4 btn-light position-relative">
-                  <i className="bi text-dark  bi-truck"></i> Order
-                </Link>
+                {isLogin() ? (
+                  <>
+                    <Link
+                      to="/cart"
+                      type="button"
+                      className="btn ms-2 btn-light position-relative">
+                      <i className="bi text-dark bi-bag"></i> Cart
+                      <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-success">
+                        {CartCount}
+                      </span>
+                    </Link>
+                    <Link
+                      to="/wish"
+                      type="button"
+                      className="btn ms-4 btn-light position-relative">
+                      <i className="bi text-dark bi-heart"></i> Wish
+                      <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-warning">
+                        {WishCount}
+                      </span>
+                    </Link>
+                    <Link
+                      to="/orders"
+                      type="button"
+                      className="btn ms-4 btn-light position-relative">
+                      <i className="bi text-dark  bi-truck"></i> Order
+                    </Link>
+                  </>
+                ) : null}
               </span>
             </ul>
           </div>

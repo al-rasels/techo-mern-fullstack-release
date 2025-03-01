@@ -117,14 +117,14 @@ function Products() {
                           {ListByRemark.map((item, i) => {
                             let price = (
                               <p className="bodyMedium text-dark my-1">
-                                {item["price"]}
+                                $ {item["price"]}
                               </p>
                             );
                             if (item["discount"] === true) {
                               price = (
                                 <p className="bodyMedium  text-dark my-1">
                                   <strike>${item["price"]}</strike> $
-                                  {item["discountPrice"]}`
+                                  {item["discountPrice"]}
                                 </p>
                               );
                             }
@@ -135,12 +135,12 @@ function Products() {
                                 className="col-md-3 p-2 col-lg-3 col-sm-6 col-12">
                                 <Link
                                   to={`/details/${item["_id"]}`}
-                                  className="card shadow-sm h-100 rounded-3 bg-white">
+                                  className="card shadow-sm h-100 rounded-3 position-relative bg-white">
                                   <img
-                                    className="w-100 rounded-top-2"
+                                    className="w-100 rounded-top-2 h-50 object-fit-contain"
                                     src={item["image"]}
                                   />
-                                  <div className="card-body">
+                                  <div className="card-body d-flex flex-column justify-content-end mb-3">
                                     <p className="bodySmal text-secondary my-1">
                                       {item["title"]}
                                     </p>
@@ -175,14 +175,14 @@ function Products() {
                           {ListByRemark.map((item, i) => {
                             let price = (
                               <p className="bodyMedium text-dark my-1">
-                                {item["price"]}
+                                $ {item["price"]}
                               </p>
                             );
                             if (item["discount"] === true) {
                               price = (
                                 <p className="bodyMedium  text-dark my-1">
                                   <strike>${item["price"]}</strike> $
-                                  {item["discountPrice"]}`
+                                  {item["discountPrice"]}
                                 </p>
                               );
                             }
@@ -195,10 +195,10 @@ function Products() {
                                   to={`/details/${item["_id"]}`}
                                   className="card shadow-sm h-100 rounded-3 bg-white">
                                   <img
-                                    className="w-100 rounded-top-2"
+                                    className="w-100 rounded-top-2 h-50 object-fit-contain"
                                     src={item["image"]}
                                   />
-                                  <div className="card-body">
+                                  <div className="card-body d-flex flex-column  justify-content-end mb-3">
                                     <p className="bodySmal text-secondary my-1">
                                       {item["title"]}
                                     </p>
@@ -232,14 +232,14 @@ function Products() {
                           {ListByRemark.map((item, i) => {
                             let price = (
                               <p className="bodyMedium text-dark my-1">
-                                {item["price"]}
+                                $ {item["price"]}
                               </p>
                             );
                             if (item["discount"] === true) {
                               price = (
                                 <p className="bodyMedium  text-dark my-1">
                                   <strike>${item["price"]}</strike> $
-                                  {item["discountPrice"]}`
+                                  {item["discountPrice"]}
                                 </p>
                               );
                             }
@@ -252,10 +252,10 @@ function Products() {
                                   to={`/details/${item["_id"]}`}
                                   className="card shadow-sm h-100 rounded-3 bg-white">
                                   <img
-                                    className="w-100 rounded-top-2"
+                                    className="w-100 rounded-top-2 h-50 object-fit-contain"
                                     src={item["image"]}
                                   />
-                                  <div className="card-body">
+                                  <div className="card-body d-flex flex-column  justify-content-end mb-3">
                                     <p className="bodySmal text-secondary my-1">
                                       {item["title"]}
                                     </p>
@@ -289,14 +289,14 @@ function Products() {
                           {ListByRemark.map((item, i) => {
                             let price = (
                               <p className="bodyMedium text-dark my-1">
-                                {item["price"]}
+                                $ {item["price"]}
                               </p>
                             );
                             if (item["discount"] === true) {
                               price = (
                                 <p className="bodyMedium  text-dark my-1">
                                   <strike>${item["price"]}</strike> $
-                                  {item["discountPrice"]}`
+                                  {item["discountPrice"]}
                                 </p>
                               );
                             }
@@ -309,10 +309,10 @@ function Products() {
                                   to={`/details/${item["_id"]}`}
                                   className="card shadow-sm h-100 rounded-3 bg-white">
                                   <img
-                                    className="w-100 rounded-top-2"
+                                    className="w-100 rounded-top-2 h-50 object-fit-contain"
                                     src={item["image"]}
                                   />
-                                  <div className="card-body">
+                                  <div className="card-body d-flex flex-column  justify-content-end mb-3">
                                     <p className="bodySmal text-secondary my-1">
                                       {item["title"]}
                                     </p>
@@ -346,14 +346,14 @@ function Products() {
                           {ListByRemark.map((item, i) => {
                             let price = (
                               <p className="bodyMedium text-dark my-1">
-                                {item["price"]}
+                                $ {item["price"]}
                               </p>
                             );
                             if (item["discount"] === true) {
                               price = (
                                 <p className="bodyMedium  text-dark my-1">
                                   <strike>${item["price"]}</strike> $
-                                  {item["discountPrice"]}`
+                                  {item["discountPrice"]}
                                 </p>
                               );
                             }
@@ -366,10 +366,10 @@ function Products() {
                                   to={`/details/${item["_id"]}`}
                                   className="card shadow-sm h-100 rounded-3 bg-white">
                                   <img
-                                    className="w-100 rounded-top-2"
+                                    className="w-100 h-50 object-fit-contain ratio ratio-1x1 rounded-top-2"
                                     src={item["image"]}
                                   />
-                                  <div className="card-body">
+                                  <div className="card-body d-flex flex-column  justify-content-end mb-3  d-flex flex-column  justify-content-end">
                                     <p className="bodySmal text-secondary my-1">
                                       {item["title"]}
                                     </p>
