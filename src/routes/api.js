@@ -53,7 +53,7 @@ router.get(
 router.get("/UserOTP/:email", UserController.UserOTP);
 router.get("/VerifyLogin/:email/:otp", UserController.VerifyLogin);
 router.get(
-    "/VerifyLogin/:email/:otp",
+    "/UserLogout",
     AuthVerification,
     UserController.UserLogout
 );
@@ -116,6 +116,7 @@ router.get(
 
 // Features
 router.get("/FeaturesList", FeaturesController.FeaturesList);
+router.get('/LegalDetails/:type', FeaturesController.LegalDetails)
 
 //Create Review
 router.post("/CreateReview", AuthVerification, ProductController.CreateReview);

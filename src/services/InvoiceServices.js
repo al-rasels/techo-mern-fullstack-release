@@ -94,9 +94,12 @@ const CreateInvoiceService = async (req) => {
         form.append('currency', PaymentSettings[0]['currency'])
         form.append('tran_id', trans_id)
 
-        form.append('success_url', `${PaymentSettings[0]['success_url']}/${trans_id}`)
-        form.append('fail_url', `${PaymentSettings[0]['fail_url']}/${trans_id}`)
-        form.append('cancel_url', `${PaymentSettings[0]['cancel_url']}/${trans_id}`)
+        // form.append('success_url', `${PaymentSettings[0]['success_url']}/${trans_id}`)
+        form.append('success_url', `${PaymentSettings[0]['success_url']}`)
+        // form.append('fail_url', `${PaymentSettings[0]['fail_url']}/${trans_id}`)
+        form.append('fail_url', `${PaymentSettings[0]['fail_url']}`)
+        // form.append('cancel_url', `${PaymentSettings[0]['cancel_url']}/${trans_id}`)
+        form.append('cancel_url', `${PaymentSettings[0]['cancel_url']}`)
         form.append('ipn_url', `${PaymentSettings[0]['ipn_url']}/${trans_id}`)
 
         form.append('cus_name', Profile[0]['cus_name'])
@@ -178,7 +181,7 @@ const PaymentFailedService = async (req) => {
 const InvoiceListService = async (req) => {
     try {
         const user_id = req.headers.user_id
-        const invoice = await InvoiceModel.findOne({userID: user_id})
+        const invoice = await InvoiceModel.find({userID: user_id})
         return {status: 'success', data: invoice}
     } catch (err) {
         return {status: 'fail', message: 'Something Went Wrong' + err.message}
@@ -186,9 +189,10 @@ const InvoiceListService = async (req) => {
 }
 const InvoiceProductListService = async (req) => {
     try {
-        const user_id = new ObjectID(req.headers.user_id);
+        // const user_id = new ObjectID(req.headers.user_id);
         const invoice_id = new ObjectID(req.params.invoice_id)
-        const matchStage = {$match: {userID: user_id, invoiceID: invoice_id}}
+        const matchStage = {$match: {invoiceID: invoice_id}}
+        // const matchStage = {$match: {userID: user_id, invoiceID: invoice_id}}
         const JoinProductStage = {$lookup: {from: 'products', localField: 'productID', foreignField: '_id', as: 'product'}}
         const UnwindProductStage = {$unwind: '$product'}
         // Finding Product from user Cart

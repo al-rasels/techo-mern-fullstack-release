@@ -19,7 +19,7 @@ const BrandListService = async () => {
 };
 const CategoryListService = async () => {
     try {
-        const data = await BrandModel.find();
+        const data = await CategoryModel.find();
         return {status: "success", data: data};
     } catch (err) {
         return {status: "fail", data: err}.toString();
@@ -27,7 +27,7 @@ const CategoryListService = async () => {
 };
 const SliderListService = async () => {
     try {
-        const data = await BrandModel.find();
+        const data = await ProductSliderModel.find();
         return {status: "success", data: data};
     } catch (err) {
         return {status: "fail", data: err}.toString();
@@ -123,11 +123,13 @@ const ListByCategoryService = async (req) => {
 const ListByRemarkService = async (req) => {
     try {
         const Remark = req.params.Remark;
+
         const MatchStage = {
             $match: {
                 remark: Remark,
             },
         };
+
         const JoinWithBrandStage = {
             $lookup: {
                 from: "brands",
@@ -321,7 +323,6 @@ const ReviewListService = async (req) => {
             },
         };
 
-
         const JoinWithProfileStage = {
             $lookup: {
                 from: "profiles",
@@ -332,10 +333,13 @@ const ReviewListService = async (req) => {
         };
         const UnwindProfileStage = {$unwind: "$profile"};
         const ProjectionStage = {
-            $project: {'des': 1, 'rating': 1, 'profile.cus_name': 1,},
-        }
+            $project: {des: 1, rating: 1, "profile.cus_name": 1},
+        };
         const data = await ReviewModel.aggregate([
-            MatchStage, JoinWithProfileStage, UnwindProfileStage, ProjectionStage
+            MatchStage,
+            JoinWithProfileStage,
+            UnwindProfileStage,
+            ProjectionStage,
         ]);
         return {status: "success", data: data};
     } catch (err) {
@@ -348,64 +352,87 @@ const CreateReviewService = async (req) => {
         const user_id = req.headers.user_id;
         const reqBody = req.body;
         const data = await ReviewModel.create({
-            productID: reqBody['productID'],
+            productID: reqBody["productID"],
             userID: user_id,
-            des: reqBody['des'],
-            rating: reqBody['rating'],
+            des: reqBody["des"],
+            rating: reqBody["rating"],
         });
         return {status: "success", data: data};
     } catch (err) {
         return {status: "fail", data: err}.toString();
     }
-}
+};
 
 const ListByFilterService = async (req) => {
     try {
         let matchConditions = {};
-        if (req.body['categoryID']) {
-            matchConditions.categoryID = new ObjectId(req.body['categoryID']);
+        if (req.body["categoryID"]) {
+            matchConditions.categoryID = new ObjectId(req.body["categoryID"]);
         }
-        if (req.body['brandID']) {
-            matchConditions.brandID = new ObjectId(req.body['brandID']);
+        if (req.body["brandID"]) {
+            matchConditions.brandID = new ObjectId(req.body["brandID"]);
         }
         let MatchStage = {$match: matchConditions};
 
-
         let AddFieldsStage = {
-            $addFields: {numericPrice: {$toInt: "$price"}}
+            $addFields: {numericPrice: {$toInt: "$price"}},
         };
-        let priceMin = parseInt(req.body['priceMin']);
-        let priceMax = parseInt(req.body['priceMax']);
+        let priceMin = parseInt(req.body["priceMin"]);
+        let priceMax = parseInt(req.body["priceMax"]);
         let PriceMatchConditions = {};
         if (!isNaN(priceMin)) {
-            PriceMatchConditions['numericPrice'] = {$gte: priceMin};
+            PriceMatchConditions["numericPrice"] = {$gte: priceMin};
         }
         if (!isNaN(priceMax)) {
-            PriceMatchConditions['numericPrice'] = {...(PriceMatchConditions['numericPrice'] || {}), $lte: priceMax};
+            PriceMatchConditions["numericPrice"] = {
+                ...(PriceMatchConditions["numericPrice"] || {}),
+                $lte: priceMax,
+            };
         }
         let PriceMatchStage = {$match: PriceMatchConditions};
 
-
-        let JoinWithBrandStage = {$lookup: {from: "brands", localField: "brandID", foreignField: "_id", as: "brand"}};
-        let JoinWithCategoryStage = {$lookup: {from: "categories", localField: "categoryID", foreignField: "_id", as: "category"}};
-        let UnwindBrandStage = {$unwind: "$brand"}
-        let UnwindCategoryStage = {$unwind: "$category"}
-        let ProjectionStage = {$project: {'brand._id': 0, 'category._id': 0, 'categoryID': 0, 'brandID': 0}}
+        let JoinWithBrandStage = {
+            $lookup: {
+                from: "brands",
+                localField: "brandID",
+                foreignField: "_id",
+                as: "brand",
+            },
+        };
+        let JoinWithCategoryStage = {
+            $lookup: {
+                from: "categories",
+                localField: "categoryID",
+                foreignField: "_id",
+                as: "category",
+            },
+        };
+        let UnwindBrandStage = {$unwind: "$brand"};
+        let UnwindCategoryStage = {$unwind: "$category"};
+        let ProjectionStage = {
+            $project: {
+                "brand._id": 0,
+                "category._id": 0,
+                categoryID: 0,
+                brandID: 0,
+            },
+        };
 
         let data = await ProductModel.aggregate([
             MatchStage,
             AddFieldsStage,
             PriceMatchStage,
-            JoinWithBrandStage, JoinWithCategoryStage,
-            UnwindBrandStage, UnwindCategoryStage, ProjectionStage
-        ])
-        return {status: "success", data: data}
-
+            JoinWithBrandStage,
+            JoinWithCategoryStage,
+            UnwindBrandStage,
+            UnwindCategoryStage,
+            ProjectionStage,
+        ]);
+        return {status: "success", data: data};
     } catch (e) {
-        return {status: "fail", data: e}.toString()
+        return {status: "fail", data: e}.toString();
     }
-}
-
+};
 
 module.exports = {
     BrandListService,
@@ -418,5 +445,6 @@ module.exports = {
     ListByRemarkService,
     DetailsService,
     ReviewListService,
-    CreateReviewService, ListByFilterService
+    CreateReviewService,
+    ListByFilterService,
 };
