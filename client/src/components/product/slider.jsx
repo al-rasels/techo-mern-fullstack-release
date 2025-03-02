@@ -39,7 +39,7 @@ function Slider() {
                         <h1 className="headline-1">{item["title"]}</h1>
                         <p>{item["des"]}</p>
                         <Link
-                          to=""
+                          to="details/654dbf21abda0c85053c9910"
                           className="btn text- fw-bolder btn btn-success px-5">
                           Buy Now
                         </Link>

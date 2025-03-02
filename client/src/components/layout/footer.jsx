@@ -37,7 +37,6 @@ function Footer() {
                     How to buy
                   </Link>
                 </p>
-
                 <p className="my-2">
                   <Link className="nav-link" to="/contact">
                     Contact
@@ -52,10 +51,15 @@ function Footer() {
               <div className="col-md-4">
                 <h1 className="bodyMedium">About</h1>
                 <p>
-                  Lorem Ipsum is simply dummy text of the printing and
-                  typesetting industry. Lorem Ipsum{" "}
+                  A modern e-commerce web application built with the MERN stack,
+                  featuring user authentication, product management, secure
+                  payments, and a seamless shopping experience.
                 </p>
-                <img className="w-75" src={PaymentImage} />
+                <img
+                  className="w-75"
+                  src={PaymentImage}
+                  alt="Payment Methods"
+                />
               </div>
             </div>
           </div>
