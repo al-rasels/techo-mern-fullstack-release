@@ -1,5 +1,5 @@
 import Modal from "react-bootstrap/Modal";
-import propic from "../../assets/images/propic.jpg";
+import propic from "../../assets/images/propic.webp";
 function FirstVisitModal(props) {
   return (
     <Modal

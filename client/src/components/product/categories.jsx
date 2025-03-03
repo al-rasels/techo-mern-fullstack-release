@@ -23,7 +23,7 @@ function Categories() {
                   className="col-6 col-lg-8r text-center col-md-8r p-2">
                   <Link
                     to={`/by-category/${item["_id"]}`}
-                    className="card h-100 rounded-3 bg-light border border-success-subtle">
+                    className="card h-100 rounded-3 bg-light border border-secondary-subtle">
                     <div className="card-body d-flex flex-column align-items-center justify-content-center">
                       <img
                         alt="category-img"
