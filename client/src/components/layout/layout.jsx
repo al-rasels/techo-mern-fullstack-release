@@ -1,5 +1,5 @@
 import AppNavBar from "./appNavBar";
-import Footer from "./Footer";
+import Footer from "./footer";
 import { Toaster } from "react-hot-toast";
 function Layout({ children }) {
   return (
